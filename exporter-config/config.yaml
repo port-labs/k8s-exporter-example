@@ -12,7 +12,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
               creationTimestamp: .metadata.creationTimestamp
               labels: .metadata.labels
             relations:
-              Cluster: '"docker-desktop"'
+              Cluster: '"educator-cluster"'
 
   - kind: batch/v1/jobs
     selector:
@@ -184,7 +184,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
     port:
       entity:
         mappings:
-          - identifier: .metadata.name
+          - identifier: (.metadata.name|=(split(".")|join("_"))
             title: .metadata.name
             icon: '"Node"'
             blueprint: '"Node"'
@@ -195,7 +195,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
               labels: .metadata.labels
               ready: .status.conditions[] | select(.type == "Ready") | .status
             relations:
-              Cluster: '"docker-desktop"'
+              Cluster: '"educator-cluster"'
 
   - kind: batch/v1/cronjobs
     selector:
@@ -242,4 +242,4 @@ resources: # List of K8s resources to list, watch, and export to Port.
               labels: .metadata.labels
               rules: .rules
             relations:
-              Cluster: '"docker-desktop"'
+              Cluster: '"educator-cluster"'
