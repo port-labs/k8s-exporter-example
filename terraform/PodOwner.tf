@@ -70,7 +70,7 @@ resource "port-labs_blueprint" "PodOwner" {
   relations {
     identifier   = "Namespace"
     title        = "Namespace"
-    required     = true
+    required     = false
     many         = false
     target       = port-labs_blueprint.Namespace.id
   }
