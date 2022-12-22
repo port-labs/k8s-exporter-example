@@ -23,7 +23,6 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
         run: |
           aws eks --region eu-west-1 update-kubeconfig --name education-eks-bDCU8yQW
           helm repo add port-labs https://port-labs.github.io/helm-charts
