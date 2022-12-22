@@ -17,8 +17,8 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
       - name: Apply tf Blueprints
         env:
-          PORT_CLIENT_ID: secrets.PORT_CLIENT_ID
-          PORT_CLIENT_SECRET: secrets.PORT_CLIENT_SECRET
+          PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID}}
+          PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
         run: |
           cd terraform;
           terraform init;
