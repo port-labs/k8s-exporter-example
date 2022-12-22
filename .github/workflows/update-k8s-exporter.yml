@@ -1,0 +1,40 @@
+name: Update K8s Exporter
+
+on:
+  push:
+    paths:
+      - "exporter-config/config.yaml"
+  workflow_dispatch:
+    
+jobs:
+  update-k8s-exporter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+      - uses: azure/setup-helm@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # only needed if version is 'latest'
+        id: install
+      - name: Configure AWS Credentials 🔒
+        id: aws-credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.24.0' # default is latest stable
+        id: install
+      - name: Update Exporter
+        run: |
+          aws eks --region eu-west-1 update-kubeconfig --name education-eks-bDCU8yQW
+          helm repo add port-labs https://port-labs.github.io/helm-charts
+          helm repo update
+
+          helm upgrade my-port-k8s-exporter port-labs/port-k8s-exporter \
+          --create-namespace --namespace port-k8s-exporter \
+          --set secret.secrets.portClientId=n8aR4zbmKBLRhYh8ZiKa42XQeLNp5ehJ --set secret.secrets.portClientSecret=FhjWVTsq5j7qjgshUtdtAiklIJQqQRDCdNnuD0SBIQRfD4irgndisaEVrOc0r65S \
+          --set-file configMap.config=./exporter-config/config.yaml --install
