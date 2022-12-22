@@ -141,7 +141,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
               conditions: .status.conditions
             relations:
               PodOwner: .metadata.ownerReferences[0].name + "-" + .metadata.namespace + "-" + .metadata.ownerReferences[0].kind
-              Node: (.spec.nodeName)|=(split(".")|join("_"))
+              Node: (.spec.nodeName) | (split(".")|join("_"))
 
   - kind: v1/pods
     selector:
@@ -159,7 +159,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
               containers: (.spec.containers | map({image, resources})) + .status.containerStatuses | group_by(.image) | map(add)
               conditions: .status.conditions
             relations:
-              Node: (.spec.nodeName)| (split(".")|join("_"))
+              Node: (.spec.nodeName) | (split(".")|join("_"))
               Namespace: .metadata.namespace
 
   - kind: v1/services
