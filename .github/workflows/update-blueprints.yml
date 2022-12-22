@@ -24,4 +24,8 @@ jobs:
         run: |
           cd terraform/
           terraform init
-          terraform plan
+          terraform apply -auto-approve
+
+          git add -u
+          git commit -m "Changed tfstate file"
+          git push
