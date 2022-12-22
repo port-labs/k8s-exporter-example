@@ -26,6 +26,9 @@ jobs:
           terraform init
           terraform apply -auto-approve
 
+
+          git config --global user.name 'Workflow'
+          git config --global user.email 'your-username@users.noreply.github.com'
           git add -u
           git commit -m "Changed tfstate file"
           git push
