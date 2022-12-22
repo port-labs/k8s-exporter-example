@@ -1,0 +1,23 @@
+name: Update Blueprints
+
+on:
+  push:
+    paths:
+      - "*.tf"
+
+jobs:
+  update-port-blueprints:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+      - uses: hashicorp/setup-terraform@v2
+      - name: Apply tf Blueprints
+        env:
+          PORT_CLIENT_ID: secrets.PORT_CLIENT_ID
+          PORT_CLIENT_SECRET: secrets.PORT_CLIENT_SECRET
+        run: |
+          cd terraform;
+          terraform init;
+          terraform apply -auto-approve
