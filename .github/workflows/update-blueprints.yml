@@ -3,7 +3,7 @@ name: Update Blueprints
 on:
   push:
     paths:
-      - "*.tf"
+      - "terraform/*.tf"
   workflow_dispatch:
     
 
@@ -20,6 +20,6 @@ jobs:
           PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID}}
           PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
         run: |
-          cd terraform;
-          terraform init;
+          cd terraform
+          terraform init
           terraform apply -auto-approve
