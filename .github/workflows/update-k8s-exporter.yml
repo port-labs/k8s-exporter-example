@@ -26,8 +26,8 @@ jobs:
           AWS_DEFAULT_REGION: eu-west-1
           AWS_DEFAULT_OUTPUT: json
         run: |
-          aws sts get-caller-identity
           aws eks update-kubeconfig --name education-eks-bDCU8yQW
+          kubectl config view --raw >~/.kube/config
           helm repo add port-labs https://port-labs.github.io/helm-charts
           helm repo update
 
