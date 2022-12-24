@@ -34,8 +34,7 @@ jobs:
           AWS_DEFAULT_OUTPUT: json
         run: |
           aws eks update-kubeconfig --name education-eks-bDCU8yQW
-          cat /home/runner/.kube/config
-          kubectl get nodes --kubeconfig /home/runner/.kube/config
+          kubectl --kubeconfig /home/runner/.kube/config get nodes 
           helm repo add port-labs https://port-labs.github.io/helm-charts
           helm repo update
 
