@@ -35,6 +35,7 @@ jobs:
         run: |
           aws sts get-caller-identity
           aws eks update-kubeconfig --name education-eks-bDCU8yQW
+          kubectl config view --minify
           kubectl --kubeconfig /home/runner/.kube/config get nodes 
           helm repo add port-labs https://port-labs.github.io/helm-charts
           helm repo update
