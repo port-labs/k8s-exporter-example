@@ -35,12 +35,11 @@ jobs:
         run: |
           aws sts get-caller-identity
           aws eks update-kubeconfig --name education-eks-bDCU8yQW
-          kubectl config view --minify
-          kubectl --kubeconfig /home/runner/.kube/config get nodes 
+
           helm repo add port-labs https://port-labs.github.io/helm-charts
           helm repo update
 
           helm upgrade my-port-k8s-exporter port-labs/port-k8s-exporter \
           --create-namespace --namespace port-k8s-exporter \
-          --set secret.secrets.portClientId=n8aR4zbmKBLRhYh8ZiKa42XQeLNp5ehJ --set secret.secrets.portClientSecret=FhjWVTsq5j7qjgshUtdtAiklIJQqQRDCdNnuD0SBIQRfD4irgndisaEVrOc0r65S \
+          --set secret.secrets.portClientId=${{ secrets.PORT_CLIENT_ID }} --set secret.secrets.portClientSecret=${{ secrets.PORT_CLIENT_SECRET }} \
           --set-file configMap.config=./exporter-config/config.yaml --install
