@@ -30,10 +30,11 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: eu-west-1
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_DEFAULT_OUTPUT: json
         run: |
-          aws eks update-kubeconfig --name education-eks-bDCU8yQW
+          # This command should be replace with your way of fetching the kubeconfig file for your cluster
+          aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
 
           helm repo add port-labs https://port-labs.github.io/helm-charts
           helm repo update
